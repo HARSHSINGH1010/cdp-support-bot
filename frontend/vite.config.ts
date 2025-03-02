@@ -5,4 +5,15 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/cdp-support-bot/',
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', '@chakra-ui/react', 'framer-motion'],
+          utils: ['axios']
+        }
+      }
+    }
+  }
 }) 
