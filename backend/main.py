@@ -17,7 +17,15 @@ app = FastAPI(title="CDP Support Chatbot")
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5175", "http://localhost:5176", "http://localhost:5177"],
+    allow_origins=[
+        "http://localhost:5173",  # Local development
+        "http://localhost:5174",
+        "http://localhost:5175",
+        "http://localhost:5176",
+        "http://localhost:5177",
+        "http://localhost:5178",
+        "https://harshsingh1010.github.io",  # GitHub Pages
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

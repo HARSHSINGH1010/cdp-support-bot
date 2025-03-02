@@ -49,7 +49,7 @@ const TypingIndicator = () => (
 )
 
 const API_BASE_URL = import.meta.env.PROD 
-  ? '/api'  // Production: use relative path
+  ? 'https://cdp-support-bot-backend.onrender.com/api'  // Production: use deployed backend
   : 'http://localhost:8000/api' // Development: use localhost
 
 const ChatInterface = () => {
