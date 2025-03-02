@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState, ReactNode } from 'react'
 
 interface CDPContextType {
   selectedPlatform: string | null
@@ -6,36 +6,17 @@ interface CDPContextType {
   clearChat: () => void
 }
 
-export const CDPContext = createContext<CDPContextType>({
-  selectedPlatform: null,
-  setSelectedPlatform: () => {},
-  clearChat: () => {},
-})
+const CDPContext = createContext<CDPContextType | undefined>(undefined)
 
-export const useCDPContext = () => useContext(CDPContext)
+interface CDPProviderProps {
+  children: ReactNode
+}
 
-export const CDPProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(() => {
-    const saved = localStorage.getItem('selectedPlatform')
-    return saved || null
-  })
-
-  const [messages, setMessages] = useState<any[]>(() => {
-    const savedMessages = localStorage.getItem('chatHistory')
-    return savedMessages ? JSON.parse(savedMessages) : []
-  })
-
-  useEffect(() => {
-    if (selectedPlatform) {
-      localStorage.setItem('selectedPlatform', selectedPlatform)
-    } else {
-      localStorage.removeItem('selectedPlatform')
-    }
-  }, [selectedPlatform])
+export const CDPProvider: React.FC<CDPProviderProps> = ({ children }) => {
+  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null)
 
   const clearChat = () => {
-    setMessages([])
-    localStorage.removeItem('chatHistory')
+    window.dispatchEvent(new Event('clearChat'))
   }
 
   return (
@@ -43,4 +24,12 @@ export const CDPProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       {children}
     </CDPContext.Provider>
   )
+}
+
+export const useCDPContext = () => {
+  const context = useContext(CDPContext)
+  if (context === undefined) {
+    throw new Error('useCDPContext must be used within a CDPProvider')
+  }
+  return context
 } 

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import {
   Box,
   VStack,
@@ -10,7 +10,6 @@ import {
   useToast,
   useColorModeValue,
   Flex,
-  Spinner,
   SlideFade,
   Avatar,
   Tooltip,
@@ -50,7 +49,7 @@ const TypingIndicator = () => (
 )
 
 const ChatInterface = () => {
-  const { selectedPlatform, clearChat: contextClearChat } = useCDPContext()
+  const { selectedPlatform } = useCDPContext()
   const [messages, setMessages] = useState<Message[]>(() => {
     const savedMessages = localStorage.getItem('chatHistory')
     if (savedMessages) {
@@ -102,7 +101,6 @@ const ChatInterface = () => {
   }, [])
 
   const bgColor = useColorModeValue('gray.50', 'gray.900')
-  const userMessageBg = useColorModeValue('blue.500', 'blue.400')
   const botMessageBg = useColorModeValue('white', 'gray.700')
   const botMessageBorder = useColorModeValue('gray.200', 'gray.600')
   const inputBg = useColorModeValue('white', 'gray.800')
@@ -148,11 +146,6 @@ const ChatInterface = () => {
     setIsLoading(true)
 
     try {
-      // Check if the last bot message was the menu and current input is a number
-      const lastBotMessage = [...messages].reverse().find(m => !m.isUser)
-      const isMenuResponse = lastBotMessage?.content.includes('CDP topics including:')
-      const isNumericInput = /^[1-8]$/.test(input.trim())
-
       const payload = {
         message: input,
         platform: selectedPlatform || 'Other'
