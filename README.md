@@ -74,7 +74,7 @@ npm run dev
 ```
 
 3. Access the application:
-- Frontend: http://localhost:5178
+- Frontend: https://harshsingh1010.github.io/cdp-support-bot/
 - Backend API: http://localhost:8000
 
 ## Usage
