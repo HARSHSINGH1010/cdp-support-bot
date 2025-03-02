@@ -48,6 +48,10 @@ const TypingIndicator = () => (
   </Flex>
 )
 
+const API_BASE_URL = import.meta.env.PROD 
+  ? '/api'  // Production: use relative path
+  : 'http://localhost:8000/api' // Development: use localhost
+
 const ChatInterface = () => {
   const { selectedPlatform } = useCDPContext()
   const [messages, setMessages] = useState<Message[]>(() => {
@@ -151,7 +155,7 @@ const ChatInterface = () => {
         platform: selectedPlatform || 'Other'
       }
 
-      const response = await axios.post('http://localhost:8000/api/chat', payload)
+      const response = await axios.post(`${API_BASE_URL}/chat`, payload)
 
       if (!response.data || !response.data.response) {
         throw new Error('Invalid response format from server')
