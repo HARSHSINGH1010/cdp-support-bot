@@ -31,7 +31,9 @@ A modern chatbot interface for Customer Data Platform (CDP) support, providing i
 - FastAPI (Python)
 - Custom knowledge base implementation
 - RESTful API endpoints
-
+### Backend Status
+The backend runs successfully on the local machine (http://localhost:8000).
+Deployment is not possible at the moment as most deployment platforms have become paid services.
 ## Getting Started
 
 ### Prerequisites
